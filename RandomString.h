@@ -17,7 +17,7 @@ public:
     RandomString();
     ~RandomString();
     string random(unsigned long long len);
-    string intToString(int x, int radix);
+    string intToString(ULL x, int radix);
 private:
     string r;
 };

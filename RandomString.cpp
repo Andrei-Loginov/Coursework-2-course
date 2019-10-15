@@ -16,7 +16,7 @@ RandomString::~RandomString()
     if (!r.empty()) r.clear();
 }
 
-string RandomString::intToString(int x, int radix)
+string RandomString::intToString(ULL x, int radix)
 {
 #ifdef DEBUG
     cout << "RandomString::intToString(int, int)\n";
