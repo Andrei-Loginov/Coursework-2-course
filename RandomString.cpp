@@ -5,7 +5,8 @@ RandomString::RandomString()
 #ifdef DEBUG
     cout << "RandomString::RandomString()\n";
 #endif
-    srand(time(nullptr));
+    random_device rd;
+    random_generator.seed(rd());
 }
 
 RandomString::~RandomString()
@@ -16,7 +17,7 @@ RandomString::~RandomString()
     if (!r.empty()) r.clear();
 }
 
-string RandomString::intToString(ULL x, int radix)
+string RandomString::intToString(size_t x, int radix)
 {
 #ifdef DEBUG
     cout << "RandomString::intToString(int, int)\n";
@@ -30,24 +31,22 @@ string RandomString::intToString(ULL x, int radix)
     return ans;
 }
 
-string RandomString::random(unsigned long long len)
+vector<int> RandomString::random(size_t len, int radix)
 {
 #ifdef DEBUG
-    cout << "RandomString::random(int)";
+    cout << "RandomString::random(ULL, int)";
 #endif
-    string s;
-    if (!r.empty()) r.clear();
-    while (len > 31)
-    {
-        s = intToString(rand() % (int)pow(2, 31), 2);
-        while (s.size() < 31)
-            s.insert(s.begin(),'0');
-        r.insert(r.begin(), s.begin(), s.end());
-        len -= 31;
-    }
-    s = intToString(rand() % (int)pow(2, len), 2);
-    while (s.size() < len)
-        s.insert(s.begin(),'0');
-    r.insert(r.begin(), s.begin(), s.end());
+    uniform_int_distribution<int> dist(0, radix - 1);
+    r.resize(len);
+    for (vector<int>::iterator iter = r.begin(); iter != r.end(); iter++)
+        *iter = dist(random_generator);
     return r;
+}
+
+string RandomString::getString()
+{
+    string ans;
+    for (int i = 0;i < r.size(); i++)
+        ans += intToString(r[i], 10);
+    return ans;
 }

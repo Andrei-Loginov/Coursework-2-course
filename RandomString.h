@@ -6,6 +6,7 @@
 #include <cmath>
 #include <string>
 #include <vector>
+#include <random>
 using namespace std;
 #define RANDOMSTRING_H
 //#define DEBUG
@@ -16,10 +17,12 @@ class RandomString
 public:
     RandomString();
     ~RandomString();
-    string random(unsigned long long len);
-    string intToString(ULL x, int radix);
+    vector <int> random(size_t len, int radix);
+    string intToString(size_t x, int radix);
+    string getString(); //return the result of last random() call
 private:
-    string r;
+    mt19937 random_generator;
+    vector <int> r;
 };
 
 #endif

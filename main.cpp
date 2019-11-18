@@ -1,29 +1,23 @@
 #include "RandomString.h"
 #include "PrCounter.h"
+#include "MatchScanner.h"
 
 int main()
 {
+    ifstream fin("start_config.txt");
+    ofstream fout("res.csv", ios_base::trunc);
+    fout << "Cardinality,StringLength,NumberOfMatches,NumberOfAppearances\n";
+    fout.close();
+    if (fin.is_open()) cout << "The file has been opened successfully\n";
     char outf[] = "res.txt";
     char rf[] = "rubbish.txt";
-    ULL strLen, minSubstrLen, maxSubstrLen, nOI, mismatchNumber;
+    size_t strLen, nOI;
+    int al;
     ofstream f;
     f.open("rubbish.txt", ios_base::trunc);
     f.close();
-    f.open("res.txt", ios_base::trunc);
-    f << "StringLength,SubstringLenght,Probability\n";
-    f.close();
-    cout << "Enter length of the string: ";
-    cin >> strLen;
-    cout << "Enter the minimal length of substring: ";
-    cin >> minSubstrLen;
-    cout << "Enter the maximal length of substring: ";
-    cin >> maxSubstrLen;
-    cout << "Enter the number of iterations for everry substring length: ";
-    cin >> nOI;
-    cout << "Enter the quantity of premissible mismathes: ";
-    cin >> mismatchNumber;
-    PrCounter p(strLen, minSubstrLen, maxSubstrLen, nOI, mismatchNumber, outf, rf);
-    RandomString rs;
-    p.getResult();
+    fin >> al >> strLen >> nOI;
+    MatchScanner ms(strLen, nOI, al);
+    ms.getres().outf("res.csv");
     return 0;
 }
